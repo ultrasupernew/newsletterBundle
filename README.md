@@ -71,3 +71,8 @@ Include the main.js file as below.
 ```twig
   <script src="{{ asset('bundles/usnnewsletter/js/main.js') }}"></script>
 ```
+
+How to include the newletter form into a template.
+==================================================
+
+{{render(controller('UsnNewsletterBundle:Default:subscribe'))}}
