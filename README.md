@@ -70,4 +70,4 @@ Include the main.js file as below.
 
 ```twig
   <script src="{{ asset('bundles/usnnewsletter/js/main.js') }}"></script>
-...
+```
