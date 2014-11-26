@@ -48,7 +48,14 @@ class AppKernel extends Kernel
 }
 ```
 
-Step 3: Include javascript
+Step 3: Update your database schema 
+-----------------------------------
+
+```bash
+php app/console doctrine:schema:update --force
+```
+
+Step 4: Include javascript
 -------------------------
 
 This bundle requires jquery. Include it in the layout template.

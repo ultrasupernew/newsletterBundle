@@ -1,0 +1,41 @@
+<?php
+
+namespace Usn\NewsletterBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\ExecutionContextInterface;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="subscriber")
+ * @UniqueEntity(fields="email", message="既に登録されています")
+ */
+class Newsletter {
+    
+    /**
+    * @ORM\Column(type="integer")
+    * @ORM\Id
+    * @ORM\GeneratedValue(strategy="AUTO")
+    */
+    protected $id;
+
+    /**
+    * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Email()
+    */
+    protected $email;
+
+    /**
+    * @ORM\Column(type="string", length=100, nullable=true)
+    */
+    protected $access_key;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $created_at;
+
+}

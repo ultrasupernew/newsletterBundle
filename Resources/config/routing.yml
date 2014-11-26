@@ -1,0 +1,8 @@
+usn_newsletter_subscribe:
+    pattern:  /newsletter/subscribe
+    defaults: { _controller: UsnNewsletterBundle:Default:subscribe }
+
+usn_newsletter_complete:
+    pattern:  /newsletter/complete
+    defaults: { _controller: UsnNewsletterBundle:Default:complete }
+
