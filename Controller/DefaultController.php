@@ -64,6 +64,37 @@ class DefaultController extends Controller
 
     }
 
+    public function unsubscribeAction($access_key) {
+
+      $em = $this->getDoctrine()->getManager();
+      
+      $newsletter = $em
+        ->getRepository('UsnNewsletterBundle:Newsletter')
+        ->findOneBy(array('access_key' => $access_key));
+
+      if(!$newsletter) throw $this->createNotFoundException('お探しのページは見つかりませんでした。');
+
+      return $this->render('UsnNewsletterBundle:Default:unsubscribe.html.twig', array('access_key' => $access_key));
+
+    }
+
+    public function unsubscribeCompleteAction($access_key) {
+
+      $em = $this->getDoctrine()->getManager();
+      
+      $newsletter = $em
+        ->getRepository('UsnNewsletterBundle:Newsletter')
+        ->findOneBy(array('access_key' => $access_key));
+
+      if(!$newsletter) throw $this->createNotFoundException('お探しのページは見つかりませんでした。');
+
+      $em->remove($newsletter);
+      $em->flush();
+
+      return $this->render('UsnNewsletterBundle:Default:unsubscribe_complete.html.twig');
+
+    }
+
     protected function createAjaxResponse($data) {
 
       $response = new Response(json_encode($data));
