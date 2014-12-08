@@ -27,17 +27,11 @@ class DefaultController extends Controller
               $em->persist($newsletter);
               $em->flush();
 
-              $message = \Swift_Message::newInstance()
-                  ->setSubject($this->container->getParameter('confirmation_email_subject'))
-                  ->setFrom($this->container->getParameter('newsletter_from_address'))
-                  ->setTo($newsletter->getEmail())
-                  ->setBody(
-                      $this->renderView(
-                          'UsnNewsletterBundle:Default:confirmation_mail.txt.twig',
-                          array('access_key' => $newsletter->getAccessKey())
-                      )
-                  );
-              $this->get('mailer')->send($message);
+              $this->sendConfirmationEmail(
+                $this->container->getParameter('confirmation_email_subject'),
+                $this->container->getParameter('newsletter_from_address'),
+                $newsletter->getEmail(),
+                $newsletter->getAccessKey());
 
               if($request->isXmlHttpRequest()) {
 
@@ -56,6 +50,33 @@ class DefaultController extends Controller
         }
 
         return $this->render('UsnNewsletterBundle:Default:subscribe.html.twig', array('form' => $form->createView()));
+    }
+
+    public function sendConfirmationEmail($subject, $sender_address, $recipient_address, $access_key) {
+
+      $message = \Swift_Message::newInstance()
+          ->setSubject($subject)
+          ->setFrom($sender_address)
+          ->setTo($recipient_address)
+          ->setBody(
+              $this->renderView(
+                  'UsnNewsletterBundle:Default:confirmation_mail.txt.twig',
+                  array('access_key' => $access_key)
+              )
+          );
+
+      if ($this->get('templating')->exists('UsnNewsletterBundle:Default:confirmation_mail.html.twig')){
+        
+        $message->addPart(
+          $this->renderView(
+            'UsnNewsletterBundle:Default:confirmation_mail.html.twig',
+            array('access_key' => $access_key)
+          ),"text/html");
+
+      }
+
+      $this->get('mailer')->send($message);
+
     }
 
     public function completeAction(){
