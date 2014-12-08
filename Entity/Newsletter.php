@@ -11,7 +11,7 @@ use DateTime;
 /**
  * @ORM\Entity
  * @ORM\Table(name="subscriber")
- * @UniqueEntity(fields="email", message="既に登録されています")
+ * @UniqueEntity(fields="email", message="既に登録されています。")
  */
 class Newsletter {
     
