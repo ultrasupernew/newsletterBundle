@@ -19,7 +19,7 @@ class NewsletterType extends AbstractType
     {
         $builder
             ->add('email', 'email')
-            ->add('save', 'submit', array('label' => '受け取る'));
+            ->add('save', 'submit', array('label' => '登録する'));
     }
 
     public function getName()
