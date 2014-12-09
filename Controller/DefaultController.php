@@ -30,6 +30,7 @@ class DefaultController extends Controller
               $this->sendConfirmationEmail(
                 $this->container->getParameter('confirmation_email_subject'),
                 $this->container->getParameter('newsletter_from_address'),
+                $this->container->getParameter('newsletter_from_name'),
                 $newsletter->getEmail(),
                 $newsletter->getAccessKey());
 
@@ -52,11 +53,11 @@ class DefaultController extends Controller
         return $this->render('UsnNewsletterBundle:Default:subscribe.html.twig', array('form' => $form->createView()));
     }
 
-    public function sendConfirmationEmail($subject, $sender_address, $recipient_address, $access_key) {
+    public function sendConfirmationEmail($subject, $sender_address, $sender_name, $recipient_address, $access_key) {
 
       $message = \Swift_Message::newInstance()
           ->setSubject($subject)
-          ->setFrom($sender_address)
+          ->setFrom(array($sender_address => $sender_name))
           ->setTo($recipient_address)
           ->setBody(
               $this->renderView(
