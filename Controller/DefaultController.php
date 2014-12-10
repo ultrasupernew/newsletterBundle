@@ -36,7 +36,7 @@ class DefaultController extends Controller
 
               if($request->isXmlHttpRequest()) {
 
-                return $this->createAjaxResponse(array("code" => 200, "message" => "登録が完了しました。"));
+                return $this->createAjaxResponse(array("code" => 200, "message" => "ご登録ありがとうございます。"));
 
               }
               else return $this->redirect($this->generateUrl('usn_newsletter_complete'));
