@@ -13,7 +13,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash
-$ composer require usn/newsletter-bundle "~1"
+$ composer require usn/newsletter-bundle "dev-master"
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -38,7 +38,7 @@ class AppKernel extends Kernel
         $bundles = array(
             // ...
 
-            new Usn\newsletterBundle(),
+            new Usn\NewsletterBundle\UsnNewsletterBundle(),
         );
 
         // ...
@@ -48,14 +48,22 @@ class AppKernel extends Kernel
 }
 ```
 
-Step 3: Update your database schema 
+Step 3: Add the routing config
+------------------------------
+
+```YAML
+newsletter:
+    resource: "@UsnNewsletterBundle/Resources/config/routing.yml"
+```
+
+Step 4: Update your database schema 
 -----------------------------------
 
 ```bash
 php app/console doctrine:schema:update --force
 ```
 
-Step 4: Include javascript
+Step 5: Include javascript
 -------------------------
 
 This bundle requires jquery. Include it in the layout template.
