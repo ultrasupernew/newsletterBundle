@@ -2,7 +2,7 @@
     {% spaceless %}
         {% if errors|length > 0 %}
             {% for error in errors %}
-                { error.message }}
+                {{ error.message }}
             {% endfor %}
         {% endif %}
     {% endspaceless %}
