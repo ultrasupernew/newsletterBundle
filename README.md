@@ -38,7 +38,7 @@ class AppKernel extends Kernel
         $bundles = array(
             // ...
 
-            new Usn\newsletterBundle(),
+            new Usn\NewsletterBundle\UsnNewsletterBundle(),
         );
 
         // ...
