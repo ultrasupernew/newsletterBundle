@@ -82,6 +82,18 @@ usn_newsletter:
     resource: "@UsnNewsletterBundle/Resources/config/routing.yml"
 ```
 
+Step 6: setup the parameters
+
+These parameters are used when sending the confirmation email after a user register it email address.
+
+```
+ #app/config/parameters.yml
+
+ parameters:   
+    
+    confirmation_email_subject: Your auto-reply email subject
+    newsletter_from_address: 'no-reply@yourdomain.com'
+    newsletter_from_name: 'Sender name'
 
 How to include the newletter form into a template.
 ==================================================
@@ -89,3 +101,18 @@ How to include the newletter form into a template.
 ```twig
 {{render(controller('UsnNewsletterBundle:Default:subscribe'))}}
 ```
+
+
+
+Get a report on the number of subscribers by emails
+===================================================
+
+The following command will send by email the number of subscribers:
+```bash
+php app/console usn:newsletter:report <recipient email>
+```
+
+
+
+
+

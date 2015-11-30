@@ -27,7 +27,7 @@ class DefaultController extends Controller
               $em->persist($newsletter);
               $em->flush();
 
-              $this->sendConfirmationEmail(
+              $ok = $this->sendConfirmationEmail(
                 $this->container->getParameter('confirmation_email_subject'),
                 $this->container->getParameter('newsletter_from_address'),
                 $this->container->getParameter('newsletter_from_name'),
@@ -36,7 +36,7 @@ class DefaultController extends Controller
 
               if($request->isXmlHttpRequest()) {
 
-                return $this->createAjaxResponse(array("code" => 200, "message" => "ご登録ありがとうございます。"));
+                return $this->createAjaxResponse(array("code" => 200, "message" => $this->get('translator')->trans("thank-you-for-your-registration")));
 
               }
               else return $this->redirect($this->generateUrl('usn_newsletter_complete'));
@@ -76,7 +76,7 @@ class DefaultController extends Controller
 
       }
 
-      $this->get('mailer')->send($message);
+      return $this->get('mailer')->send($message);
 
     }
 
@@ -94,7 +94,7 @@ class DefaultController extends Controller
         ->getRepository('UsnNewsletterBundle:Newsletter')
         ->findOneBy(array('access_key' => $access_key));
 
-      if(!$newsletter) throw $this->createNotFoundException('お探しのページは見つかりませんでした。');
+      if(!$newsletter) throw $this->createNotFoundException($this->get('translator')->trans("page-not-found"));
 
       return $this->render('UsnNewsletterBundle:Default:unsubscribe.html.twig', array('access_key' => $access_key));
 
@@ -108,7 +108,7 @@ class DefaultController extends Controller
         ->getRepository('UsnNewsletterBundle:Newsletter')
         ->findOneBy(array('access_key' => $access_key));
 
-      if(!$newsletter) throw $this->createNotFoundException('お探しのページは見つかりませんでした。');
+      if(!$newsletter) throw $this->createNotFoundException($this->get('translator')->trans('page-not-found'));
 
       $em->remove($newsletter);
       $em->flush();

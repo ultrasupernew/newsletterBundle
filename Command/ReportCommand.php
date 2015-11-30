@@ -14,8 +14,13 @@ class ReportCommand extends ContainerAwareCommand
   protected function configure()
   {
     $this
-        ->setName('report:subscriber')
-        ->setDescription('Get number of subscribers')
+        ->setName('usn:newsletter:report')
+        ->setDescription('Sends an email with the number of subscribers.')
+        ->addArgument(
+                'to',
+                InputArgument::REQUIRED,
+                'The email to send the report to.'
+            )
     ;
   }
 
@@ -24,22 +29,20 @@ class ReportCommand extends ContainerAwareCommand
 
     $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
+
+    $to = $input->getArgument("to");
+    
     $newsletter = $em
       ->getRepository('UsnNewsletterBundle:Newsletter')
       ->findAll();
 
-    $default_timezone = date_default_timezone_get();
-    date_default_timezone_set('Asia/Tokyo');
-    $today = date("Y年n月j日", time());
-    date_default_timezone_set($default_timezone);
-
     $message = \Swift_Message::newInstance()
-        ->setSubject('fan.redbull.jp メルマガ登録者数 - ' . $today)
-        ->setFrom('no-reply@fan.redbull.jp')
-        ->setTo('rb_blue@ultrasupernew.com')
-        ->setBody($today . "\n\n" . '登録者数：' . count($newsletter));
+        ->setSubject('Subscribers')
+        ->setFrom($this->getContainer()->getParameter('newsletter_from_address'))
+        ->setTo($to)
+        ->setBody('Subscribers: ' . count($newsletter));
     $this->getContainer()->get('mailer')->send($message);
 
-    //$output->writeln('登録者数：' . count($newsletter));
+    $output->writeln('Report sent to ' . $to);
   }
 }
