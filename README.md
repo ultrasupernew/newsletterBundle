@@ -97,6 +97,7 @@ These parameters are used when sending the confirmation email after a user regis
     newsletter_from_name: 'Sender name'
 ```
 
+The confirmation email templates is located in Resources/views/Default/comfirmation_email.html.twig and Resources/views/Default/comfirmation_email.txt.twig
 
 How to include the newletter form into a template.
 ==================================================
