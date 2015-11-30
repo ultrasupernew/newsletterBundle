@@ -72,6 +72,17 @@ Include the main.js file as below.
   <script src="{{ asset('bundles/usnnewsletter/js/main.js') }}"></script>
 ```
 
+Step 5: update the routing file
+-------------------------------
+
+```
+#app/config/routing.yml
+
+usn_newsletter:
+    resource: "@UsnNewsletterBundle/Resources/config/routing.yml"
+```
+
+
 How to include the newletter form into a template.
 ==================================================
 
