@@ -82,7 +82,8 @@ usn_newsletter:
     resource: "@UsnNewsletterBundle/Resources/config/routing.yml"
 ```
 
-Step 6: setup the parameters
+Step 6: setup confirmation email parameters
+-------------------------------------------
 
 These parameters are used when sending the confirmation email after a user register it email address.
 
@@ -94,6 +95,8 @@ These parameters are used when sending the confirmation email after a user regis
     confirmation_email_subject: Your auto-reply email subject
     newsletter_from_address: 'no-reply@yourdomain.com'
     newsletter_from_name: 'Sender name'
+```
+
 
 How to include the newletter form into a template.
 ==================================================
